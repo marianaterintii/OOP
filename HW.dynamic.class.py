@@ -1,5 +1,11 @@
 # dynamic
 # world of banks
+'''
+* ENCAPSULATION - wrapping data and the methods that work on data within one unit.This puts restrictions 
+on accessing variables and methods directly and can prevent the accidental modification of data. 
+
+* Getter: A method that allows you to access an attribute in a given class
+* Setter: A method that allows you to set or mutate the value of an attribute in a class'''
 
 class Bank:
     #constructor
@@ -7,7 +13,7 @@ class Bank:
         self.check_balance_type (balance)
         self.__balance = balance        # private
 
-    def getBalance(self):               # method get/set for acces into private properties
+    def getBalance(self):            
         return self.__balance
     
     def setBalance(self, balance):
@@ -36,14 +42,21 @@ class CreditBank (Bank):
     def __init__(self, max_credit_amount, credit_percentage, balance = 0 ): 
         super().__init__(balance) 
         self.check_balance_type(max_credit_amount)
-        self.max_credit_amount = max_credit_amount
+        self.__max_credit_amount = max_credit_amount
         self.credit_percentage = credit_percentage
     
+    def get_max_credit_amount(self): # access to atribuite from outside the class
+        return self.__max_credit_amount
+    
+    def set_max_credit_amount(self, max_credit_amount):
+        self.check_balance_type(max_credit_amount)
+        self.__max_credit_amount = max_credit_amount
+    
     def monthlyPayment(self):
-        return self.max_credit_amount * self.credit_percentage / 100 / 12
+        return self.__max_credit_amount * self.credit_percentage / 100 / 12
 
     def __str__(self): # override to print all properties in a formatted string
-        return f" Max credit amount: {self.max_credit_amount}, Interest:{self.credit_percentage}%, Monthly payment: {self.monthlyPayment(): .2f}"
+        return f" Max credit amount: {self.__max_credit_amount}, Interest:{self.credit_percentage}%, Monthly payment: {self.monthlyPayment(): .2f}"
 
     
 ##############################
@@ -85,9 +98,13 @@ print(credit)
 |                |                          | |                                |
 |                | .__init__(self.  -----------                                |
 |                |  .credit,                | <--- world_bank -- +-- obj ---+  |
-|                |  .percentage, balance=0) |                    | .credit     |
+|                |  .percentage, balance=0) |                    | .credit   | |
 |                | .monthly_payment         |                    | .percentage |  
-|                | .__str__(self)           |                    | .monthly    |  
-|                +--------------------------+                    +----------+  |
+|                | .__str__(self)           |                    | .montly   | |  
+|                |                          |                    |    ^      | |
+|                |                          |                    +----|------+ |
+|           <------.getcredit() ------------|-------------------------+        |
+|           ------>.setcredit()-------------|-------------------------+        |   
+|                +--------------------------+                                  |
 +------------------------------------------------------------------------------+
 '''
